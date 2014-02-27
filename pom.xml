@@ -7,8 +7,8 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<penatho.release.repo>http://repository.pentaho.org/artifactory/public-release/</penatho.release.repo>
-		<penatho.snapshot.repo>http://repository.pentaho.org/artifactory/public-snapshot/</penatho.snapshot.repo>
+		<pentaho.release.repo>http://repository.pentaho.org/artifactory/public-release/</pentaho.release.repo>
+		<pentaho.snapshot.repo>http://repository.pentaho.org/artifactory/public-snapshot/</pentaho.snapshot.repo>
 		
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
