@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.pentaho</groupId>
+	<artifactId>pentaho-parent-pom</artifactId>
+	<version>1.0.3-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<properties>
+		<penatho.release.repo>http://repository.pentaho.org/artifactory/public-release/</penatho.release.repo>
+		<penatho.snapshot.repo>http://repository.pentaho.org/artifactory/public-snapshot/</penatho.snapshot.repo>
+		
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		
+		<maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
+		<maven-clean-plugin.version>2.4.1</maven-clean-plugin.version>
+		<maven-install-plugin.version>2.3.1</maven-install-plugin.version>
+		<maven-deploy-plugin.version>2.7</maven-deploy-plugin.version>
+		<maven-javadoc-plugin.version>2.9</maven-javadoc-plugin.version>
+		<maven-release-plugin.version>2.4.1</maven-release-plugin.version>
+		<maven-source-plugin.version>2.2.1</maven-source-plugin.version>
+		<maven-jar-plugin.version>2.4</maven-jar-plugin.version>
+		
+		<target.jdk.version>1.7</target.jdk.version>
+		<github.user>pentaho</github.user>
+	</properties>
+	
+	<organization>
+		<name>Pentaho Corporation</name>
+		<url>http://www.pentaho.com</url>
+	</organization>
+	
+	<developers>
+		<developer>
+			<name>Pentaho Build Team</name>
+			<email>buildteam@pentaho.com</email>
+			<roles>
+				<role>creator</role>
+				<role>maintainer</role>
+			</roles>
+		</developer>
+	</developers>
+	
+	<scm>
+		<connection>scm:git:git@github.com:${github.user}/${project.artifactId}.git</connection>
+		<url>scm:git:git@github.com:${github.user}/${project.artifactId}.git</url>
+		<developerConnection>scm:git:git@github.com:${github.user}/${project.artifactId}.git</developerConnection>
+		<tag>HEAD</tag>
+	</scm>
+	
+	<build>
+	
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+			</plugin>
+		</plugins>
+		
+		<pluginManagement>
+			<plugins>
+				
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${maven-compiler-plugin.version}</version>
+					<configuration>
+						<source>${target.jdk.version}</source>
+						<target>${target.jdk.version}</target>
+					</configuration>
+				</plugin>
+				
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>${maven-clean-plugin.version}</version>
+				</plugin>
+				
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-install-plugin</artifactId>
+					<version>${maven-install-plugin.version}</version>
+				</plugin>
+				
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>${maven-deploy-plugin.version}</version>
+				</plugin>
+				
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>${maven-javadoc-plugin.version}</version>
+				</plugin>
+				
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>${maven-release-plugin.version}</version>
+				</plugin>
+				
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>${maven-source-plugin.version}</version>
+					<executions>
+						<execution>
+							<id>attach-sources</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>jar-no-fork</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>${maven-jar-plugin.version}</version>
+					<configuration>
+						<archive>
+							<manifest>
+								<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+								<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+							</manifest>
+						</archive>
+					</configuration>
+				</plugin>
+				
+				
+			</plugins>
+		</pluginManagement>
+	</build>
+	
+	<distributionManagement>
+		<!-- 	if you plan on releasing anything that inherits this parent pom
+				you will need your Maven settings.xml to have the appropriate
+				entries ... we recommend something like this:
+		
+				<servers>
+					<server>
+						<id>pentaho-public-release</id>
+						<username>YOUR_REPO_USERNAME</username>
+						<password>YOUR_REPO_PASSWORD</password>
+					</server>
+					<server>
+						<id>pentaho-public-snapshots</id>
+						<username>YOUR_REPO_USERNAME</username>
+						<password>YOUR_REPO_PASSWORD</password>
+					</server>
+				</servers>
+		
+		 -->
+		<repository>
+			<id>pentaho-public-release</id>
+			<name>Pentaho internal release repository</name>
+			<url>${pentaho.release.repo}</url>
+		</repository>
+		<snapshotRepository>
+			<id>pentaho-public-snapshots</id>
+			<name>Pentaho internal snapshot repository</name>
+			<url>${pentaho.snapshot.repo}</url>
+		</snapshotRepository>
+	</distributionManagement>
+	
+	<dependencies>
+	
+		<!--	in order to ensure you can properly resolve all Pentaho public
+				artifacts and externally proxied artifacts, we recommend the 
+				following in your Maven settings.xml: 
+		
+				<profiles>
+					<profile>
+						<id>pentaho-public-release</id>
+						<repositories>
+						
+							<repository>
+								<id>pentaho-public-release</id>
+								<name>Pentaho public release repository</name>
+								<url>http://repository.pentaho.org/artifactory/public-release/</url>
+								<releases>
+									<updatePolicy>always</updatePolicy>
+									<checksumPolicy>fail</checksumPolicy>
+								</releases>
+								<snapshots>
+									<updatePolicy>always</updatePolicy>
+									<checksumPolicy>fail</checksumPolicy>
+								</snapshots>
+							</repository>
+						
+							<repository>
+								<id>pentaho-public-snapshots</id>
+								<name>Pentaho public snapshot repository</name>
+								<url>http://repository.pentaho.org/artifactory/public-snapshot/</url>
+								<releases>
+									<updatePolicy>always</updatePolicy>
+									<checksumPolicy>fail</checksumPolicy>
+								</releases>
+								<snapshots>
+									<enabled>true</enabled>
+									<checksumPolicy>fail</checksumPolicy>
+								</snapshots>
+							</repository>
+						
+							<repository>
+								<id>pentaho-public-fetch</id>
+								<name>Pentaho public aggregate view of repositories</name>
+								<url>http://repository.pentaho.org/artifactory/repo</url>
+								<releases>
+									<updatePolicy>always</updatePolicy>
+									<checksumPolicy>fail</checksumPolicy>
+								</releases>
+								<snapshots>
+									<updatePolicy>always</updatePolicy>
+									<checksumPolicy>fail</checksumPolicy>
+								</snapshots>
+							</repository>
+						
+						</repositories>
+						
+						<pluginRepositories>
+                                <pluginRepository>
+                                        <id>pentaho-public-fetch</id>
+                                        <name>Pentaho public aggregate view of repositories</name>
+                                        <url>http://repository.pentaho.org/artifactory/repo</url>
+                                        <releases>
+                                                <updatePolicy>always</updatePolicy>
+                                                <checksumPolicy>fail</checksumPolicy>
+                                        </releases>
+                                        <snapshots>
+                                                <updatePolicy>always</updatePolicy>
+                                                <checksumPolicy>fail</checksumPolicy>
+                                        </snapshots>
+                                </pluginRepository>
+						</pluginRepositories>
+						
+					</profile>
+				</profiles>
+				
+				<activeProfiles>
+					<activeProfile>pentaho-public-release</activeProfile>
+				</activeProfiles>
+				
+				If you find that you are unable to resolve something unless you add
+				a new repository, PLEASE inform buidteam@pentaho.com and we will
+				discuss the addition of the repo and/or the specific third-party
+				artifacts you require to the repo.  If you don't, others may find
+				it challenging to build your project!
+		 -->
+	
+	</dependencies>
+	
+</project>
